@@ -1,0 +1,24 @@
+﻿# Unity generated folders inside Source/
+Source/[Ll]ibrary/
+Source/[Tt]emp/
+Source/[Oo]bj/
+Source/[Bb]uild/
+Source/[Bb]uilds/
+Source/[Ll]ogs/
+Source/[Uu]ser[Ss]ettings/
+Source/.utmp/
+Source/.vs/
+Source/.idea/
+Source/*.csproj
+Source/*.sln
+Source/*.slnx
+Source/*.suo
+Source/*.tmp
+Source/*.user
+Source/*.pidb
+Source/*.booproj
+
+# Temporary AI handoff archive & test builds
+ai_handoff.zip
+Builds/*
+!Builds/.gitkeep
