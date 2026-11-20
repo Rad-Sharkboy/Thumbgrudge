@@ -171,6 +171,6 @@ Packages/packages-lock.json linguist-generated
 LightingData.asset     binary
 
 # Submission files stay directly downloadable without Git LFS.
-Builds/HANDS-OFF.apk -filter -diff -merge -text
+Builds/Thumbgrudge.apk -filter -diff -merge -text
 Docs/media/** -filter -diff -merge -text
 "Source/Assets/TextMesh Pro/Fonts/**" -filter -diff -merge -text

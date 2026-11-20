@@ -27,4 +27,4 @@ Source/*.booproj
 # Local archives and temporary builds
 *.zip
 /Builds/*
-!/Builds/HANDS-OFF.apk
+!/Builds/Thumbgrudge.apk

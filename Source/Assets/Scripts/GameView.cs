@@ -41,7 +41,10 @@ namespace HandsOff
             public float Age, Start, End;
         }
 
-        private enum Menu { None, Options, Looks, Difficulty }
+        private enum Menu { None, Options, Looks, Difficulty, Guide }
+        private const string GuideSeenKey = "Thumbgrudge.GuideSeen";
+        private RectTransform guidePanel, guideFinger, guideBlob;
+        private Menu guideBack;
 
         private readonly Sprite[] sprites = new Sprite[(int)Shape.Blob + 1];
         private readonly Ripple[] pulses = new Ripple[6];
@@ -267,7 +270,8 @@ namespace HandsOff
             MakeOption(options, "MUSIC", GameFeedback.Option.Music, 0.705f, 0.926f);
             MakeOption(options, "SOUND", GameFeedback.Option.Sound, 0.572f, 0.926f);
             MakeOption(options, "HAPTICS", GameFeedback.Option.Vibration, 0.439f, 0.926f);
-            MenuButton(options, "LOOKS", 0.074f, 0.306f, 0.926f, 0.413f, PeachButton, Ink, OpenLooks);
+            MenuButton(options, "LOOKS", 0.074f, 0.306f, 0.45f, 0.413f, PeachButton, Ink, OpenLooks);
+            MenuButton(options, "HOW TO PLAY", 0.48f, 0.306f, 0.926f, 0.413f, SkyButton, Ink, OpenGuide);
             optionsBack = MenuButton(options, "BACK", 0.074f, 0.179f, 0.926f, 0.274f, Amber, Ink,
                 () => CloseMenu()).Caption;
             homeButton = MenuButton(options, "HOME", 0.074f, 0.052f, 0.47f, 0.145f, SkyButton, Ink, home).Root;
@@ -297,7 +301,42 @@ namespace HandsOff
             }
             MenuButton(wardrobe, "BACK", 0.074f, 0.04f, 0.926f, 0.14f, Amber, Ink, () => CloseMenu());
             MakeDifficultyPicker(race);
+            MakeGuide();
             SetMenu(Menu.None);
+        }
+
+        private void MakeGuide()
+        {
+            guidePanel = Region("How to play", menuRoot, 0.065f, 0.11f, 0.935f, 0.89f);
+            var sheet = Plate("Guide card", guidePanel, Panel, true);
+            Label("Guide heading", sheet, "HOW TO PLAY", 0.07f, 0.836f, 0.93f, 0.95f, 92f, Ink);
+            var strip = Plate("Gesture example", Region("Example", sheet, 0.07f, 0.627f, 0.93f, 0.816f), Paper, false);
+            guideFinger = Picture("Touch point", strip, Shape.Ring, Ink, 0.10f, 0.27f, 0.24f, 0.73f).rectTransform;
+            guideFinger.GetComponent<Image>().preserveAspect = true;
+            guideBlob = Region("Moving blob", strip, 0.30f, 0.12f, 0.52f, 0.88f);
+            MakeMascot(guideBlob, White, Blush, true);
+            Picture("Amber", strip, Shape.Diamond, Amber, 0.77f, 0.33f, 0.90f, 0.67f).preserveAspect = true;
+            GuideLine(sheet, 0.47f, "TAP BESIDE ME", "I bounce away from your finger.");
+            GuideLine(sheet, 0.32f, "HOLD + DRAG", "Move your finger to steer me into amber.");
+            GuideLine(sheet, 0.17f, "DON'T TOUCH ME!", "Touch me in Solo and I shatter.");
+            MenuButton(sheet, "GOT IT", 0.07f, 0.045f, 0.93f, 0.145f, Amber, Ink, () => CloseMenu());
+        }
+
+        private static void GuideLine(RectTransform sheet, float y, string title, string detail)
+        {
+            Label(title, sheet, title, 0.08f, y + 0.052f, 0.92f, y + 0.128f, 53f, Ink);
+            Label(detail, sheet, detail, 0.08f, y, 0.92f, y + 0.053f, 35f, Ink);
+        }
+
+        public void ShowFirstLaunchGuide()
+        {
+            if (PlayerPrefs.GetInt(GuideSeenKey, 0) == 0) OpenGuide();
+        }
+
+        private void OpenGuide()
+        {
+            guideBack = menu;
+            SetMenu(Menu.Guide);
         }
 
         private void MakeDifficultyPicker(Action<BotRace.Difficulty> race)
@@ -389,7 +428,16 @@ namespace HandsOff
         public bool CloseMenu()
         {
             if (menu == Menu.None) return false;
-            if (menu == Menu.Looks) SetMenu(looksBack);
+            if (menu == Menu.Guide)
+            {
+                if (PlayerPrefs.GetInt(GuideSeenKey, 0) == 0)
+                {
+                    PlayerPrefs.SetInt(GuideSeenKey, 1);
+                    PlayerPrefs.Save();
+                }
+                SetMenu(guideBack);
+            }
+            else if (menu == Menu.Looks) SetMenu(looksBack);
             else if (paused) resume();
             else SetMenu(Menu.None);
             return true;
@@ -401,6 +449,7 @@ namespace HandsOff
             optionsPanel.gameObject.SetActive(page == Menu.Options);
             looksPanel.gameObject.SetActive(page == Menu.Looks);
             difficultyPanel.gameObject.SetActive(page == Menu.Difficulty);
+            guidePanel.gameObject.SetActive(page == Menu.Guide);
             menuRoot.gameObject.SetActive(page != Menu.None);
             footer.gameObject.SetActive(page == Menu.None && card.gameObject.activeSelf);
             unlockBanner.gameObject.SetActive(page == Menu.None && unlockTime > 0f && hud.gameObject.activeSelf);
@@ -541,7 +590,7 @@ namespace HandsOff
             diagram.gameObject.SetActive(true);
             results.gameObject.SetActive(false);
             eyebrow.text = "DON'T TOUCH ME";
-            heading.text = "HANDS OFF";
+            heading.text = "THUMBGRUDGE";
             hint.text = "PUSH INTO AMBER";
             buttonLabel.text = "SOLO";
             secondaryLabel.text = "VS BOT";
@@ -618,7 +667,7 @@ namespace HandsOff
         public void ShowGameOver(string reason, int score, int best)
         {
             ShowResultCard();
-            eyebrow.text = "HANDS OFF";
+            eyebrow.text = "THUMBGRUDGE";
             heading.text = reason switch
             {
                 "BEAM HIT" => "ZAPPED",
@@ -756,6 +805,14 @@ namespace HandsOff
         public void Tick(float dt)
         {
             feedback.Tick(dt);
+            if (menu == Menu.Guide)
+            {
+                float phase = Mathf.Repeat(Time.unscaledTime, 2.6f);
+                float width = ((RectTransform)guideBlob.parent).rect.width;
+                guideFinger.gameObject.SetActive(phase < 1.9f);
+                guideFinger.anchoredPosition = Vector2.right * (width * 0.16f * Mathf.SmoothStep(0f, 1f, phase - 0.35f));
+                guideBlob.anchoredPosition = Vector2.right * (width * 0.37f * Mathf.SmoothStep(0f, 1f, (phase - 0.25f) / 1.5f));
+            }
             if (unlockTime > 0f)
             {
                 unlockTime -= dt;

@@ -11,7 +11,7 @@ namespace HandsOff
         internal enum Option { Music, Sound, Vibration }
 
         private const int SampleRate = 22050;
-        private static readonly string[] Keys = { "HandsOff.Music", "HandsOff.Sound", "HandsOff.Vibration" };
+        private static readonly string[] Keys = { "Thumbgrudge.Music", "Thumbgrudge.Sound", "Thumbgrudge.Vibration" };
         private readonly bool[] enabled = new bool[Keys.Length];
         private readonly AudioSource[] voices = new AudioSource[4];
         private readonly AudioClip[] cues = new AudioClip[6];
@@ -223,7 +223,7 @@ namespace HandsOff
                     if (eighth == 2 || eighth == 6) MixBrush(samples, time, 0.069f, 0.103f, percussion);
                 }
             }
-            return MakeClip("Hands Off - Toybox Shuffle", samples);
+            return MakeClip("Thumbgrudge - Toybox Shuffle", samples);
         }
 
         private static void MixNote(float[] samples, float time, int note, float duration, float gain, float overtone)

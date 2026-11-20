@@ -12,8 +12,8 @@ namespace HandsOff
         [SerializeField, Min(0.1f)] private float comboWindow = 3f;
         [SerializeField, Min(1)] private int maximumCombo = 4;
 
-        private const string BestKey = "HandsOff.Best";
-        private const string LookKey = "HandsOff.Look";
+        private const string BestKey = "Thumbgrudge.Best";
+        private const string LookKey = "Thumbgrudge.Look";
         private const float NerveSeconds = 0.85f;
         private const float ShieldImmunity = 0.60f;
         private const float HitStopSeconds = 0.03f;
@@ -58,7 +58,7 @@ namespace HandsOff
             if (scene.name != "SampleScene") return;
             foreach (var root in scene.GetRootGameObjects())
                 if (root.activeInHierarchy && root.GetComponentInChildren<GameBootstrap>() != null) return;
-            new GameObject("HANDS OFF").AddComponent<GameBootstrap>();
+            new GameObject("THUMBGRUDGE").AddComponent<GameBootstrap>();
         }
 
         private void Awake()
@@ -94,6 +94,7 @@ namespace HandsOff
             RefreshLayout();
             arena.PrepareRun(false);
             view.ShowTitle();
+            view.ShowFirstLaunchGuide();
         }
 
         private void RefreshLayout()

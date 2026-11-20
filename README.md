@@ -1,6 +1,6 @@
 <div align="center">
 
-# HANDS OFF
+# Thumbgrudge
 
 **Your blob has eyes. Your finger is the problem.**
 
@@ -10,22 +10,22 @@
 
 <img src="Docs/media/hero-gameplay.gif" width="360" alt="Portrait gameplay showing the title, repulsion rings, and collecting amber">
 
-**[Watch the full gameplay showcase](Docs/media/demo.mp4) · [Download the Android APK](Builds/HANDS-OFF.apk)**
+**[Watch the full gameplay showcase](Docs/media/demo.mp4) · [Download the Android APK](Builds/Thumbgrudge.apk)**
 
 </div>
 
 
 ## Judge quick start
 
-Download and extract the entire submission ZIP to a regular folder first. Open this README in the extracted folder to find the APK, the media, and the Unity project together. From GitHub, the links below point to the same files.
+Extract <strong>GlitchAndGlory-Thumbgrudge-Submission.zip</strong> to a regular folder first. Open this README in the extracted folder to find the APK, the media, and the Unity project together. From GitHub, the links below point to the same files.
 
 | What you want to do | Open this |
 |---|---|
-| Play on an Android phone | `Builds/HANDS-OFF.apk`. From GitHub, open the [APK file](Builds/HANDS-OFF.apk) and choose **Download raw file**. |
+| Play on an Android phone | `Builds/Thumbgrudge.apk`. From GitHub, open the [APK file](Builds/Thumbgrudge.apk) and choose **Download raw file**. |
 | Watch without installing | [Docs/media/demo.mp4](Docs/media/demo.mp4). If GitHub shows a file page, choose **Download raw file**, then play the MP4. |
 | Run or rebuild in Unity | Open the extracted `Source` folder from Unity Hub as the project. Use the exact Editor and scene in [Install or build](#install-or-build). On the first import, let Unity resolve the packages before pressing Play. |
 
-Start with **SOLO**, tap just beside the blob, and bank it into an amber diamond. Then try **VS BOT → IMPOSSIBLE** for the shared-pickup race with both mines and lasers.
+On first launch, read **HOW TO PLAY** and tap **GOT IT**. You can reopen the animated guide from **OPTIONS** or the pause menu. Start with **SOLO**, tap just beside the blob, and bank it into an amber diamond. Then try **VS BOT → IMPOSSIBLE** for the shared-pickup race with both mines and lasers.
 ## Don't touch what you're trying to save
 
 We made the touchscreen part of the rule. Put your thumb **beside** the blob and the repulsion field pushes it away. Hold and drag to steer, or push from outside the ink rails to line up a bank. Press **on** the blob in Solo and it shatters. Your thumb gives you control and can end the run in the same move. It takes one tap to feel the difference.
@@ -36,7 +36,7 @@ We made the touchscreen part of the rule. Put your thumb **beside** the blob and
 |---|---|
 | <img src="Docs/media/mechanics-juice.gif" width="220" alt="Solo game mechanics in motion"> | **Bank, collect, repeat.** Pick up amber diamonds within three seconds of each other to build a combo up to ×4. The amber bar drains as time runs out. Stay just outside touching distance (1.0–1.65 times the core radius) for a tightening dashed Nerve ring. Every 0.85 seconds earns +1 and refreshes the combo timer. |
 | <img src="Docs/media/progression-modes.gif" width="220" alt="Offline bot race and its hazards"> | **Share the arena. Race for the same amber.** In **VS BOT**, both racers collect from the same pool for one point per node. They pass through each other, but a touch or hazard sends the affected racer to their starting spot with points intact. The first to hit that race's target wins. |
-| <img src="Docs/media/loop-retry.gif" width="220" alt="The Solo defeat card and a one-tap restart"> | **One tap back in.** A direct touch gives you **I SAID DON'T!** / **YOU TOUCHED IT**. Beams can leave you **ZAPPED** and mines **POKED**. The retry card shows the run score and saved **BEST**. The HUD tracks the best live, and Unity's local `PlayerPrefs` key `HandsOff.Best` keeps it across app restarts. |
+| <img src="Docs/media/loop-retry.gif" width="220" alt="The Solo defeat card and a one-tap restart"> | **One tap back in.** A direct touch gives you **I SAID DON'T!** / **YOU TOUCHED IT**. Beams can leave you **ZAPPED** and mines **POKED**. The retry card shows the run score and saved **BEST**. The HUD tracks the best live, and Unity's local `PlayerPrefs` key `Thumbgrudge.Best` keeps it across app restarts. |
 
 ### The blob has opinions
 
@@ -65,13 +65,13 @@ We made the touchscreen part of the rule. Put your thumb **beside** the blob and
 | Peach | 20 | Springier wall banks, with bounce raised from 0.88 to 0.98 |
 | Taro | 40 | +20% pickup reach |
 
-Looks apply the same perk to both racers in **VS BOT**. The showcase follows the title and Solo loop, then the wardrobe and progressively tougher bot races. It uses staged Play Mode input and progression with the actual game renderer.
+Looks apply the same perk to both racers in **VS BOT**. The 60 fps portrait showcase opens on the first-launch guide. Watch a tap send the blob into amber, then a held drag bend its path. The ring marks the hand-authored finger gestures. The later Solo shot starts at five pickups to show a shield break, followed by the wardrobe and all four bot difficulties.
 
 ## Portrait gallery
 
 <table align="center">
 <tr>
-<td align="center"><img src="Docs/media/title.png" width="175" alt="HANDS OFF title screen"><br>Meet the blob</td>
+<td align="center"><img src="Docs/media/title.png" width="175" alt="THUMBGRUDGE title screen"><br>Meet the blob</td>
 <td align="center"><img src="Docs/media/gameplay-1.png" width="175" alt="Early Solo gameplay"><br>Keep your distance</td>
 <td align="center"><img src="Docs/media/gameplay-2.png" width="175" alt="Solo hazards and scoring"><br>Split-second decision</td>
 <td align="center"><img src="Docs/media/feature-mode.png" width="175" alt="VS BOT race"><br>Two blobs, one amber</td>
@@ -81,7 +81,7 @@ Looks apply the same perk to both racers in **VS BOT**. The showcase follows the
 
 ## Under the hood
 
-The seven gameplay scripts build the arena, sprites, interfaces, and sounds at runtime without Inspector wiring. The portrait HUD uses `Screen.safeArea` and a `CanvasScaler` set to 1080 × 1920 at 0.5 match. The palette is warm paper `#F4EFE6`, ink `#1B1B1F`, panel cream `#FFFDF9`, white `#FFFFFF`, blush `#FFCDD2`, amber `#F59E0B`, and crimson `#E63946`. The sprite material is reused for the trail and line effects.
+The Android package is <code>com.glitchandglory.thumbgrudge</code>. The seven gameplay scripts build the arena, sprites, interfaces, and sounds at runtime without Inspector wiring. The portrait HUD uses `Screen.safeArea` and a `CanvasScaler` set to 1080 × 1920 at 0.5 match. The palette is warm paper `#F4EFE6`, ink `#1B1B1F`, panel cream `#FFFDF9`, white `#FFFFFF`, blush `#FFCDD2`, amber `#F59E0B`, and crimson `#E63946`. The sprite material is reused for the trail and line effects.
 
 | Script | Job |
 |---|---|
@@ -95,7 +95,7 @@ The seven gameplay scripts build the arena, sprites, interfaces, and sounds at r
 
 ## Install or build
 
-1. Download [HANDS-OFF.apk](Builds/HANDS-OFF.apk) onto an ARM64 phone running Android 8.0 (API 26) or newer. Open the APK, allow installation from the app opening it if prompted, and tap **Install**.
+1. Download [Thumbgrudge.apk](Builds/Thumbgrudge.apk) onto an ARM64 phone running Android 8.0 (API 26) or newer. Open the APK, allow installation from the app opening it if prompted, and tap **Install**.
 2. To build from source, install **Unity 6000.6.10f1** through Unity Hub with **Android Build Support**, including the bundled Android SDK and NDK tools and OpenJDK.
 3. Open `Source/` as the Unity project. Open `Assets/Scenes/SampleScene.unity` and press Play. Left mouse works as a finger in the Editor.
 4. Open **File → Build Profiles**, select **Android™**, and switch to it if needed. The included Android setup uses portrait orientation, ARM64, IL2CPP, and LZ4 build compression. Click **Build** and choose the APK output path.
