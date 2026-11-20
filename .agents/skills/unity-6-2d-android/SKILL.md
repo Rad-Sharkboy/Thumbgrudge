@@ -1,4 +1,4 @@
-﻿---
+---
 name: unity-6-2d-android
 description: Use whenever writing or debugging Unity 6.6 (6000.6) C# scripts, 2D URP components, Input System touch controls, or Android builds.
 ---

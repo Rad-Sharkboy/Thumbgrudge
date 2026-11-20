@@ -1,4 +1,4 @@
-﻿# Unity generated folders inside Source/
+# Unity generated folders inside Source/
 Source/[Ll]ibrary/
 Source/[Tt]emp/
 Source/[Oo]bj/
@@ -18,7 +18,13 @@ Source/*.user
 Source/*.pidb
 Source/*.booproj
 
-# Temporary AI handoff archive & test builds
-ai_handoff.zip
-Builds/*
-!Builds/.gitkeep
+# Generated IDE files and root Unity package logs
+*.csproj
+*.sln
+.vs/
+/Logs/
+
+# Local archives and temporary builds
+*.zip
+/Builds/*
+!/Builds/HANDS-OFF.apk
